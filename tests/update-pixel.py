@@ -7,7 +7,7 @@ class addToQueueDto:
     self.y = y
     self.color = color
 
-data = addToQueueDto(100, 100, [0, 0, 255, 255])
+data = addToQueueDto(10, 10, [0, 0, 255, 255])
 
 url = "http://localhost:3000/canvas/single"
 headers = {'Content-Type': 'application/json'}
