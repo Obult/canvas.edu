@@ -1,15 +1,16 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-// import { PrismaService } from './services/prisma/prisma.service';
+import { EventGateway } from './event/event.gateway';
 import { PrismaService } from './prisma/prisma.service';
-// var cors = require('cors')
+import { NestExpressApplication } from '@nestjs/platform-express';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
   const prismaService = app.get(PrismaService);
   await prismaService.enableShutdownHooks(app);
+  const server = app.getHttpServer();
   app.enableCors( {
-    origin: ['http://localhost:8000', 'http://codam.nl:8000', 'http://f0r6s9.codam.nl:8000', 'http://f0r5s9.codam.nl:8000'],
+    origin: ['*'],
   });
   await app.listen(3000);
 }

@@ -10,17 +10,24 @@ datasource db {
 }
 
 enum Access {
+  DIRECT
   PRIVATE
   PROTECTED
   PUBLIC
 }
 
+enum Status {
+  OFFLINE
+  ONLINE
+  INGAME
+}
+
 model User {
+  // online or offline (bool or enum with ingame too)
   id        Int     @default(autoincrement()) @id
   intraId   Int     @unique
-  name      String
-  status    String?
-  hashedpw  String?
+  name      String  @unique // prompt on startup
+  status    Status  @default(OFFLINE)
   friends   Int[] // ids
   blocked   Int[] // ids
   elo       Int     @default(500)
@@ -42,14 +49,14 @@ model Room {
 }
 
 model Msg {
-  @@id([roomId, id]) //Dit wil ik graag uitgelegd krijgen <3 // Zodat we kunnen lazy loaden, id is samengevoegd id en roomid, op zichzelf zijn deze hier niet uniek
-  id        Int  // has to be set to last Id of Room + 1 and also increase the room->lastId by 1
+  @@id([roomId, id])
+  id        Int
   room      Room @relation(fields: [roomId], references: [id])
   roomId    Int
   body      String
   author    User @relation(fields: [authorId], references: [id])
   authorId  Int
-  invite    Boolean // ? how ?
+  invite    Boolean @default(false) // ? how ? , maybe add a linkt to a game in the backend when we have to type of that available
 }
 
 model Game  {
