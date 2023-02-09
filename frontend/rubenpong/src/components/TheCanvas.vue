@@ -1,7 +1,9 @@
 <script setup lang="ts">
-defineProps<{
-  msg: string;
-}>();
+
+// defineProps<{
+//   msg: string;
+// }>();
+
 </script>
 
 <template>
@@ -16,6 +18,44 @@ defineProps<{
     </div>
   </div>
 </template>
+
+<script lang="ts">
+import io from 'socket.io-client';
+
+export default {
+  // data() {
+  //   const canvas: HTMLCanvasElement = document.getElementById('pixels') as HTMLCanvasElement;
+  //   const ctx: CanvasRenderingContext2D = canvas.getContext('2d') as CanvasRenderingContext2D;
+  //   const imgData: ImageData = ctx.createImageData(canvas.width, canvas.height);
+  //   const data: Uint8ClampedArray = imgData.data;
+
+  // },
+  mounted() {
+    var canvas: HTMLCanvasElement = document.getElementById('pixels') as HTMLCanvasElement;
+    var ctx: CanvasRenderingContext2D = canvas.getContext('2d') as CanvasRenderingContext2D;
+    // var imgData: ImageData = ctx.createImageData(canvas.width, canvas.height);
+    // var data: Uint8ClampedArray = imgData.data;
+
+    const socket = io('http://localhost:3000');
+    socket.on('canvas-update', pxlData => {
+      ctx.fillStyle = "green";
+      ctx.fillRect(pxlData.x, pxlData.y, 10, 10);
+      console.log('received update on canvas');
+    });
+    socket.on('canvas-init', canvasData => {
+      if (!ctx) {
+        return;
+      }
+      console.log('width: ', canvasData.w);
+      console.log('data: ', canvasData.data);
+      var tmpData = new Uint8ClampedArray(canvasData.data);
+      console.log('ui8: ', tmpData);
+      ctx.putImageData(new ImageData(tmpData, canvasData.w, canvasData.h), 0, 0);
+      console.log('hope to have received the canvas-init');
+    });
+  }
+};
+</script>
 
 <style scoped>
 .item {
