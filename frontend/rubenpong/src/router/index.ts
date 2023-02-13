@@ -28,7 +28,7 @@ const router = createRouter({
       component: () => import('../views/ChatRoomView.vue'),
     },
     {
-      path: '/canvas', //waarom staat deze meuk nou weer hier he Oswin >:(
+      path: '/canvas',
       name: 'canvas',
       component: () => import('../views/CanvasView.vue'),
     },

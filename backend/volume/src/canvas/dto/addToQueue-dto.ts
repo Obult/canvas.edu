@@ -1,5 +1,5 @@
-export class addToQueueDto {
-  x: number;
-  y: number;
-  color: Uint8ClampedArray;
+export class imageDataDto {
+  width: number;
+  height: number;
+  data: Uint8ClampedArray;
 }

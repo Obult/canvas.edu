@@ -11,8 +11,8 @@
     <div>
       <canvas
         id="pixels"
-        width="200"
-        height="200"
+        width="800"
+        height="800"
         style="border:1px solid #CCCCCC;"
       />
     </div>
@@ -22,35 +22,49 @@
 <script lang="ts">
 import io from 'socket.io-client';
 
-export default {
-  // data() {
-  //   const canvas: HTMLCanvasElement = document.getElementById('pixels') as HTMLCanvasElement;
-  //   const ctx: CanvasRenderingContext2D = canvas.getContext('2d') as CanvasRenderingContext2D;
-  //   const imgData: ImageData = ctx.createImageData(canvas.width, canvas.height);
-  //   const data: Uint8ClampedArray = imgData.data;
+function increaseArraySize(inputArray: Uint8ClampedArray): Uint8ClampedArray {
+  const outputArray = new Uint8ClampedArray(64);
+  for (let i = 0; i < 64; i++) {
+    outputArray[i] = inputArray[i % 4];
+  }
+  return outputArray;
+}
 
-  // },
+export default {
   mounted() {
+    var init: boolean = false;
     var canvas: HTMLCanvasElement = document.getElementById('pixels') as HTMLCanvasElement;
     var ctx: CanvasRenderingContext2D = canvas.getContext('2d') as CanvasRenderingContext2D;
-    // var imgData: ImageData = ctx.createImageData(canvas.width, canvas.height);
-    // var data: Uint8ClampedArray = imgData.data;
+    var queue: ImageData[];
 
     const socket = io('http://localhost:3000');
     socket.on('canvas-update', pxlData => {
-      ctx.fillStyle = "green";
-      ctx.fillRect(pxlData.x, pxlData.y, 10, 10);
-      console.log('received update on canvas');
+      if (init)
+      {
+        // console.log('width: ', pxlData.width);
+        // console.log('data: ', pxlData.data);
+        var tmpData = new Uint8ClampedArray(pxlData.data);
+        tmpData = increaseArraySize(tmpData);
+        // console.log('ui8: ', tmpData.length);
+        ctx.putImageData(new ImageData(tmpData, 4, 4), pxlData.width * 4, pxlData.height * 4);
+        console.log('received update on canvas');
+      }
+      else
+      {
+        queue.push(new ImageData(pxlData.data, pxlData.width, pxlData.height));
+      }
     });
     socket.on('canvas-init', canvasData => {
       if (!ctx) {
         return;
       }
-      console.log('width: ', canvasData.w);
-      console.log('data: ', canvasData.data);
+      init = true;
+      console.log('width: ', canvasData.width, ' H: ', canvasData.height);
+      // console.log('data: ', canvasData.data);
       var tmpData = new Uint8ClampedArray(canvasData.data);
-      console.log('ui8: ', tmpData);
-      ctx.putImageData(new ImageData(tmpData, canvasData.w, canvasData.h), 0, 0);
+      console.log('ui8: ', tmpData, ' L: ', tmpData.length);
+      ctx.putImageData(new ImageData(tmpData, canvasData.width, canvasData.height), 0, 0);
+      // add everything from queue to canvas
       console.log('hope to have received the canvas-init');
     });
   }

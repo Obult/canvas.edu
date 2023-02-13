@@ -26,7 +26,9 @@ import HelloWorld from './components/HelloWorld.vue';
         <RouterLink to="/chat">
           Chat
         </RouterLink>
-        <!-- <RouterLink to="/canvas">Canvas</RouterLink> -->
+        <RouterLink to="/canvas">
+          Canvas
+        </RouterLink>
       </nav>
     </div>
   </header>

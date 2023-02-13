@@ -1,7 +1,6 @@
 import { SubscribeMessage, WebSocketGateway, OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect } from '@nestjs/websockets';
-import { stringify } from 'querystring';
 import { Socket, Server } from 'socket.io';
-import { addToQueueDto } from './dto/addToQueue-dto';
+import { imageDataDto } from './dto/addToQueue-dto';
 
 @WebSocketGateway({
   cors: {
@@ -10,24 +9,19 @@ import { addToQueueDto } from './dto/addToQueue-dto';
 })
 export class CanvasGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
   private canvas: {
-    h: number;
-    w: number;
+    height: number;
+    width: number;
     data: Uint8ClampedArray;
+  } = {
+    height: 800,
+    width: 800,
+    data: new Uint8ClampedArray(800 * 800)
   };
-  private queue: {
-    x: number;
-    y: number;
-    data: Uint8ClampedArray;
-  }[];
   private server: Server;
 
   afterInit(server: Server) {
-    this.server = server
-    this.canvas = {
-      h: 200,
-      w: 200,
-      data: new Uint8ClampedArray(200 * 200 * 4),
-    }
+    this.server = server;
+    this.canvas.data = new Uint8ClampedArray(this.canvas.height * this.canvas.width);
   }
 
   handleConnection(client: Socket) {
@@ -39,17 +33,8 @@ export class CanvasGateway implements OnGatewayInit, OnGatewayConnection, OnGate
     console.log(`Client disconnected: ${client.id}`);
   }
 
-  addToQueue(add: addToQueueDto) {
-    // this.queue.push({
-    //   x: add.x,
-    //   y: add.y,
-    //   data: add.color,
-    // })
+  paintToCanvas(add: imageDataDto) {
+    // this.canvas.paintService(add);
     this.server.emit('canvas-update', add);
   }
-
-  // @SubscribeMessage('canvas')
-  // handleMessage(client: Socket, data: any) {
-  //   client.emit('canvas', data);
-  // }
 }
