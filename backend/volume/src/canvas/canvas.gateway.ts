@@ -15,13 +15,13 @@ export class CanvasGateway implements OnGatewayInit, OnGatewayConnection, OnGate
   } = {
     height: 800,
     width: 800,
-    data: new Uint8ClampedArray(800 * 800)
+    data: new Uint8ClampedArray(800 * 800 * 4)
   };
   private server: Server;
 
   afterInit(server: Server) {
     this.server = server;
-    this.canvas.data = new Uint8ClampedArray(this.canvas.height * this.canvas.width);
+    // this.canvas.data = new Uint8ClampedArray(this.canvas.height * this.canvas.width);
   }
 
   handleConnection(client: Socket) {
@@ -35,6 +35,7 @@ export class CanvasGateway implements OnGatewayInit, OnGatewayConnection, OnGate
 
   paintToCanvas(add: imageDataDto) {
     // this.canvas.paintService(add);
+
     this.server.emit('canvas-update', add);
   }
 }
