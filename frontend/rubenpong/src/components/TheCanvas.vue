@@ -37,7 +37,7 @@ export default {
     var ctx: CanvasRenderingContext2D = canvas.getContext('2d') as CanvasRenderingContext2D;
     var queue: ImageData[];
 
-    const socket = io('http://localhost:3000/gw');
+    const socket = io('http://localhost:3000/canvas');
     socket.on('canvas-update', pxlData => {
       if (init)
       {
@@ -59,7 +59,13 @@ export default {
       // console.log('data: ', canvasData.data);
       var tmpData = new Uint8ClampedArray(canvasData.data);
       console.log('ui8: ', tmpData, ' L: ', tmpData.length);
-      ctx.putImageData(new ImageData(tmpData, canvasData.width, canvasData.height), 0, 0);
+      const iData: ImageData = new ImageData(tmpData, canvasData.width, canvasData.height);
+      var tmpctx: CanvasRenderingContext2D = document.createElement('canvas').getContext('2d') as CanvasRenderingContext2D;
+      tmpctx.putImageData(iData, 0, 0);
+      ctx.scale(4, 4);
+      ctx.imageSmoothingEnabled = false;
+      ctx.imageSmoothingQuality = 'high';
+      ctx.drawImage(tmpctx.canvas, 0, 0);
       // add everything from queue to canvas
       init = true;
       console.log('hope to have received the canvas-init');
@@ -70,6 +76,7 @@ export default {
 
 <style scoped>
 .item {
+  image-rendering: pixelated;
   margin-top: 2rem;
   display: flex;
 }
