@@ -17,18 +17,13 @@ export class CanvasController {
   @Post('single')
   async paintToCanvas(@Body() pxlData: imageDataDto) {
     var tmpData = new Uint8ClampedArray(pxlData.data);
-    console.log('ui8: ', tmpData.length);
     if (tmpData.length != 4)
     {
       throw new HttpException({
         status: HttpStatus.FORBIDDEN,
         error: 'colordata is incorrect',
-      }, HttpStatus.FORBIDDEN, {
-        // cause: error
-      });
-      // return {succes: false};
+      }, HttpStatus.FORBIDDEN, {});
     }
-    // console.log("pxldata.len: ", pxlData.data)
     return this.canvasGate.paintToCanvas(pxlData);
   }
 }

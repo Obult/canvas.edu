@@ -37,15 +37,12 @@ export default {
     var ctx: CanvasRenderingContext2D = canvas.getContext('2d') as CanvasRenderingContext2D;
     var queue: ImageData[];
 
-    const socket = io('http://localhost:3000');
+    const socket = io('http://localhost:3000/gw');
     socket.on('canvas-update', pxlData => {
       if (init)
       {
-        // console.log('width: ', pxlData.width);
-        // console.log('data: ', pxlData.data);
         var tmpData = new Uint8ClampedArray(pxlData.data);
         tmpData = increaseArraySize(tmpData);
-        // console.log('ui8: ', tmpData.length);
         ctx.putImageData(new ImageData(tmpData, 4, 4), pxlData.width * 4, pxlData.height * 4);
         console.log('received update on canvas');
       }
@@ -58,13 +55,13 @@ export default {
       if (!ctx) {
         return;
       }
-      init = true;
       console.log('width: ', canvasData.width, ' H: ', canvasData.height);
       // console.log('data: ', canvasData.data);
       var tmpData = new Uint8ClampedArray(canvasData.data);
       console.log('ui8: ', tmpData, ' L: ', tmpData.length);
       ctx.putImageData(new ImageData(tmpData, canvasData.width, canvasData.height), 0, 0);
       // add everything from queue to canvas
+      init = true;
       console.log('hope to have received the canvas-init');
     });
   }

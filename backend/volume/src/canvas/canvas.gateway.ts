@@ -2,10 +2,28 @@ import { SubscribeMessage, WebSocketGateway, OnGatewayInit, OnGatewayConnection,
 import { Socket, Server } from 'socket.io';
 import { imageDataDto } from './dto/addToQueue-dto';
 
+// function modifyRegion(data: Uint8ClampedArray, regionStart: number, newValues: [number, number, number, number]) {
+//   for (let i = 0; i < 4; i++) {
+//     data[regionStart + i] = newValues[i];
+//   }
+// }
+
+function modifyRegion(data: Uint8ClampedArray, width: number, regionStart: number, newValues: [number, number, number, number]) {
+  for (let i = 0; i < 4; i++) {
+    for (let j = 0; j < 4; j++) {
+      for (let k = 0; k < 4; k++) {
+        data[regionStart + (i * width * 4) + (j * 4) + k] = newValues[k];
+      }
+    }
+  }
+}
+
+
 @WebSocketGateway({
   cors: {
     origin: '*',
-  }
+  },
+  namespace: '/canvas'
 })
 export class CanvasGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
   private canvas: {
@@ -35,7 +53,8 @@ export class CanvasGateway implements OnGatewayInit, OnGatewayConnection, OnGate
 
   paintToCanvas(add: imageDataDto) {
     // this.canvas.paintService(add);
-
+    // change add.data into an number array of 4 and throw it into next function
+    // modifyRegion(this.canvas.data, this.canvas.width, add.height * this.canvas.width * 4 + add.width * 4, /* here */);
     this.server.emit('canvas-update', add);
   }
 }
