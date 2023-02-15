@@ -9,58 +9,25 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum Access {
-  DIRECT
-  PRIVATE
-  PROTECTED
-  PUBLIC
+enum Team {
+  ORANGE
+  PURPLE
+  MINT
+  TURQUOISE
 }
 
-enum Status {
-  OFFLINE
-  ONLINE
-  INGAME
+model Pixel {
+  id        Int     @default(autoincrement()) @id
+  location  Int[]
+  stamp     DateTime  @default(now())
+  artist    User?     @relation(fields: [artistId], references: [id])
+  artistId  Int?
 }
 
 model User {
-  // online or offline (bool or enum with ingame too)
   id        Int     @default(autoincrement()) @id
   intraId   Int     @unique
   name      String  @unique // prompt on startup
-  status    Status  @default(OFFLINE)
-  friends   Int[] // ids
-  blocked   Int[] // ids
-  elo       Int     @default(500)
-  rooms     Room[]
-  owns      Room[]  @relation("owns")
-  sendMsg   Msg[]
-  games     Game[]
-}
-
-model Room {
-  id          Int @default(autoincrement()) @id
-  owner       User? @relation("owns", fields: [ownerId], references: [id])
-  ownerId     Int?
-  users       User[]
-  hashedCode  String?
-  access      Access @default(PUBLIC)
-  messages    Msg[]
-  lastId      Int
-}
-
-model Msg {
-  @@id([roomId, id])
-  id        Int
-  room      Room @relation(fields: [roomId], references: [id])
-  roomId    Int
-  body      String
-  author    User @relation(fields: [authorId], references: [id])
-  authorId  Int
-  invite    Boolean @default(false) // ? how ? , maybe add a linkt to a game in the backend when we have to type of that available
-}
-
-model Game  {
-  id        Int @default(autoincrement()) @id
-  players   User[]
-  score     Int[]
+  team      Team    
+  pixels    Pixel[] @relation()
 }
