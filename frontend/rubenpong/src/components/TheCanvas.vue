@@ -55,18 +55,18 @@ export default {
       if (!ctx) {
         return;
       }
-      console.log('width: ', canvasData.width, ' H: ', canvasData.height);
-      // console.log('data: ', canvasData.data);
       var tmpData = new Uint8ClampedArray(canvasData.data);
-      console.log('ui8: ', tmpData, ' L: ', tmpData.length);
       const iData: ImageData = new ImageData(tmpData, canvasData.width, canvasData.height);
-      var tmpctx: CanvasRenderingContext2D = document.createElement('canvas').getContext('2d') as CanvasRenderingContext2D;
+      const tmpCanvas = document.createElement('canvas');
+      tmpCanvas.width = 800;
+      tmpCanvas.height = 800;
+      var tmpctx: CanvasRenderingContext2D = tmpCanvas.getContext('2d') as CanvasRenderingContext2D;
+      // var tmpctx: CanvasRenderingContext2D = document.createElement('canvas').getContext('2d') as CanvasRenderingContext2D;
       tmpctx.putImageData(iData, 0, 0);
       ctx.scale(4, 4);
       ctx.imageSmoothingEnabled = false;
-      ctx.imageSmoothingQuality = 'high';
       ctx.drawImage(tmpctx.canvas, 0, 0);
-      // add everything from queue to canvas
+      // add everything from queue to canvasv (need to add)
       init = true;
       console.log('hope to have received the canvas-init');
     });
