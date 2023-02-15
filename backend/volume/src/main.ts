@@ -1,6 +1,5 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { EventGateway } from './event/event.gateway';
 import { PrismaService } from './prisma/prisma.service';
 import { NestExpressApplication } from '@nestjs/platform-express';
 
