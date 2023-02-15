@@ -10,8 +10,8 @@
     <p>This project is meant for education and its pixels are not updateable on the frontend on purpose.<br>
       The project is due on the 6th of may, there will be 50 simultaneous users at most.<br><br>
 
-      edit the canvas through an api POST request to api.pixels.codam.nl<br>
-      endpoint /canvas/single<br>
+      edit the canvas through an api POST request to: <br>api.pixels.codam.nl<br>
+      endpoint: <br>/canvas/single<br>
       send it a json:<br>
       {<br>
         &emsp;width: [x value]<br>
