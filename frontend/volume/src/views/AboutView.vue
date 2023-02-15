@@ -10,9 +10,6 @@
     <p>This project is meant for education and its pixels are not updateable on the frontend on purpose.<br>
       The project is due on the 6th of may, there will be 50 simultaneous users at most.<br><br>
 
-      contribute on <a href="https://github.com/Obult/canvas.edu">GitHub</a>
-      <br><br>
-
       edit the canvas through an api POST request to api.pixels.codam.nl<br>
       endpoint /canvas/single<br>
       send it a json:<br>
@@ -20,7 +17,10 @@
         &emsp;width: [x value]<br>
         &emsp;height: [y value]<br>
         &emsp;data = [color as uint8 array of 4] (or gets rejected)<br>
-      }<br>
+      }<br><br>
+
+      contribute on <a href="https://github.com/Obult/canvas.edu">GitHub</a>
+      <br>
     </p>
   </div>
 </template>
