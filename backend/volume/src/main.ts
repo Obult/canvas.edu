@@ -9,7 +9,7 @@ async function bootstrap() {
   const prismaService = app.get(PrismaService);
   await prismaService.enableShutdownHooks(app);
   app.enableCors( {
-    origin: ['http://localhost:8000', 'http://codam.nl:8000', 'http://f0r6s9.codam.nl:8000', 'http://f0r5s9.codam.nl:8000'],
+    origin: ['*'],
   });
   await app.listen(3000);
 }

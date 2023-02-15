@@ -4,13 +4,13 @@ FROM node:19-alpine
 # Set the working directory in the container
 WORKDIR /app
 
-COPY rubenpong .
+COPY volume .
 
 # # Install dependencies
 RUN npm install
 
-# Expose port 8000 to the host
-EXPOSE 8000
+# Expose port 80 to the host
+EXPOSE 80
 
 # Run the command to start the application
 CMD ["npm", "run", "start"]

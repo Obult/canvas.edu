@@ -12,7 +12,7 @@ services:
     depends_on:
       - db
     environment:
-      DATABASE_URL: postgres://dbuser:dbpassword@db:5432/ruubdb
+      DATABASE_URL: postgres://dbuser:dbpassword@db:5432/canvasDB
   db:
     image: postgres:15
     container_name: db
@@ -23,16 +23,16 @@ services:
     environment:
       POSTGRES_USER: dbuser
       POSTGRES_PASSWORD: dbpassword
-      POSTGRES_DB: ruubdb
+      POSTGRES_DB: canvasDB
   frontend:
     build:
       context: ./frontend
-    image: reactjs-frontend
+    image: vue-frontend
     container_name: frontend
     ports:
-      - "8000:8000"
+      - "80:80"
     volumes:
-      - "./frontend/rubenpong/src:/app/src"
+      - "./frontend/volume/src:/app/src"
     depends_on:
       - backend
 
