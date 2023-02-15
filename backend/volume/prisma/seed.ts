@@ -6,13 +6,13 @@ async function main() {
 
   const alice = await prisma.user.upsert({
 
-    where: { intraId: 0 },
+    where: { id: 0 },
 
     update: {},
 
     create: {
 
-      intraId: 0,
+      id: 0,
 
       name: 'Alice',
 
@@ -22,13 +22,13 @@ async function main() {
 
   const bob = await prisma.user.upsert({
 
-    where: { intraId: 1 },
+    where: { id: 1 },
 
     update: {},
 
     create: {
 
-      intraId:  1,
+      id:  1,
 
       name: 'Bob',
 

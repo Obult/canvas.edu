@@ -26,8 +26,7 @@ model Pixel {
 
 model User {
   id        Int     @default(autoincrement()) @id
-  intraId   Int     @unique
   name      String  @unique // prompt on startup
-  team      Team    
+  team      Team?    
   pixels    Pixel[] @relation()
 }
