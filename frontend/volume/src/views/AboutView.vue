@@ -17,9 +17,9 @@
       endpoint /canvas/single<br>
       send it a json:<br>
       {<br>
-        width: [x value]<br>
-        height: [y value]<br>
-        data = [color as uint8 array of 4] (or gets rejected)<br>
+        &emsp;width: [x value]<br>
+        &emsp;height: [y value]<br>
+        &emsp;data = [color as uint8 array of 4] (or gets rejected)<br>
       }<br>
     </p>
   </div>
