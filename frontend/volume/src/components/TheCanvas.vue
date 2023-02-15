@@ -1,7 +1,9 @@
 <script setup lang="ts">
-defineProps<{
-  msg: string;
-}>();
+
+// defineProps<{
+//   msg: string;
+// }>();
+
 </script>
 
 <template>
@@ -9,16 +11,72 @@ defineProps<{
     <div>
       <canvas
         id="pixels"
-        width="200"
-        height="200"
+        width="800"
+        height="800"
         style="border:1px solid #CCCCCC;"
       />
     </div>
   </div>
 </template>
 
+<script lang="ts">
+import io from 'socket.io-client';
+
+function increaseArraySize(inputArray: Uint8ClampedArray): Uint8ClampedArray {
+  const outputArray = new Uint8ClampedArray(64);
+  for (let i = 0; i < 64; i++) {
+    outputArray[i] = inputArray[i % 4];
+  }
+  return outputArray;
+}
+
+export default {
+  mounted() {
+    var init: boolean = false;
+    var canvas: HTMLCanvasElement = document.getElementById('pixels') as HTMLCanvasElement;
+    var ctx: CanvasRenderingContext2D = canvas.getContext('2d') as CanvasRenderingContext2D;
+    var queue: ImageData[];
+
+    const socket = io('http://localhost:3000/canvas');
+    socket.on('canvas-update', pxlData => {
+      if (init)
+      {
+        var tmpData = new Uint8ClampedArray(pxlData.data);
+        tmpData = increaseArraySize(tmpData);
+        ctx.putImageData(new ImageData(tmpData, 4, 4), pxlData.width * 4, pxlData.height * 4);
+        console.log('received update on canvas');
+      }
+      else
+      {
+        queue.push(new ImageData(pxlData.data, pxlData.width, pxlData.height));
+      }
+    });
+    socket.on('canvas-init', canvasData => {
+      if (!ctx) {
+        return;
+      }
+      var tmpData = new Uint8ClampedArray(canvasData.data);
+      const iData: ImageData = new ImageData(tmpData, canvasData.width, canvasData.height);
+      const tmpCanvas = document.createElement('canvas');
+      tmpCanvas.width = 800;
+      tmpCanvas.height = 800;
+      var tmpctx: CanvasRenderingContext2D = tmpCanvas.getContext('2d') as CanvasRenderingContext2D;
+      // var tmpctx: CanvasRenderingContext2D = document.createElement('canvas').getContext('2d') as CanvasRenderingContext2D;
+      tmpctx.putImageData(iData, 0, 0);
+      ctx.scale(4, 4);
+      ctx.imageSmoothingEnabled = false;
+      ctx.drawImage(tmpctx.canvas, 0, 0);
+      // add everything from queue to canvasv (need to add)
+      init = true;
+      console.log('hope to have received the canvas-init');
+    });
+  }
+};
+</script>
+
 <style scoped>
 .item {
+  image-rendering: pixelated;
   margin-top: 2rem;
   display: flex;
 }
