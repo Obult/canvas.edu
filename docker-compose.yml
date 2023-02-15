@@ -30,7 +30,7 @@ services:
     image: vue-frontend
     container_name: frontend
     ports:
-      - "80:80"
+      - "8000:80"
     volumes:
       - "./frontend/volume/src:/app/src"
     depends_on:

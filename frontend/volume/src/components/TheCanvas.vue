@@ -37,7 +37,7 @@ export default {
     var ctx: CanvasRenderingContext2D = canvas.getContext('2d') as CanvasRenderingContext2D;
     var queue: ImageData[];
 
-    const socket = io('http://localhost:3000/canvas');
+    const socket = io('http://pixels.codam.nl:3000/canvas');
     socket.on('canvas-update', pxlData => {
       if (init)
       {

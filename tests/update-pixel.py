@@ -1,7 +1,7 @@
 import requests
 import json
 
-url = "http://localhost:3000/canvas/single"
+url = "http://pixels.codam.nl:3000/canvas/single"
 headers = {'Content-Type': 'application/json'}
 
 class pxlInfo:
