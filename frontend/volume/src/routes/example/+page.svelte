@@ -41,53 +41,75 @@ let copyButton;
 	<span>Sending a post request with a JSON body:</span>
 	<p>Will update the canvas for you and for everybody else.</p>
 	<p>In python this will look like this:</p>
-	<div class="code-block">
-		<pre><code class="language-python">
-			import requests
+	<div class="code-block"> Python example:
+		<pre class="pre-block">
+			<code class="language-python">
+import requests
 import json
 
 url = "http://api.pixels.codam.nl/canvas/single"
 headers = &#123;'Content-Type': 'application/json'&#125;
 
 class pxlInfo:
-  def __init__(self, width, height, data):
-    self.width = width
-    self.height = height
-    self.data = data
+	def __init__(self, width, height, data):
+		self.width = width
+		self.height = height
+		self.data = data
 		
-    data = pxlInfo(42, 42, [0, 25, 255, 255])
-    response = requests.post(url, headers=headers, data=json.dumps(data.__dict__))
+		data = pxlInfo(42, 42, [0, 25, 255, 255])
+		response = requests.post(url, headers=headers, data=json.dumps(data.__dict__))
 
 if response.status_code == 200 | 201:
-  print("Successfully sent data")
+	print("Successfully sent data")
 else:
-  print("Failed to send data", response.status_code)
+	print("Failed to send data", response.status_code)
 
-		</code></pre>
+		</code>
+	</pre>
 		<button class="copy-button" bind:this={copyButton}>Copy</button>
 	</div>
 </div>
 
 <style>
 .code-block {
-  position: relative;
+	position: relative;
+	/* display: inline-block; */
+	color: #ccc;
+	background-color: #252424;
+	border-radius: 6px;
+	border: 4px solid grey;
+	padding-left: 10px;
+}
+
+.pre-block {
+	background-color: inherit;
+	/* display: inline-block; */
+}
+
+.language-python {
+	font-family: Consolas, Courier, monospace;
+	background-color: inherit;
+	color: #aaa;
+	counter-reset: line;
 }
 
 .copy-button {
+	display: inline-block;
   position: absolute;
   top: 0;
   right: 0;
 }
+.copy-button {
+  display: inline-block;
+  background-color: black;
+  color: grey;
+  border: none;
+  padding: 8px;
+  border-radius: 5px;
+  cursor: pointer;
+}
 
 /* code {
-  font-family: Consolas, Courier, monospace;
-  background-color: #252424;
-	color: #aaa;
-  counter-reset: line;
-  padding: 1em;
-	border: 4px solid #aaa;
-	border-radius: 6px;
-}
 
 code:before {
   content: counter(line);
