@@ -22,9 +22,9 @@ export class CanvasController {
     if (tmpData.length != 4)
     {
       throw new HttpException({
-        status: HttpStatus.FORBIDDEN,
+        status: HttpStatus.BAD_REQUEST,
         error: 'colordata is incorrect',
-      }, HttpStatus.FORBIDDEN, {});
+      }, HttpStatus.BAD_REQUEST, {});
     }
     return this.canvasGate.paintToCanvas(pxlData);
   }
