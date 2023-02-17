@@ -5,13 +5,14 @@
 
 <div class="app">
 	<Header />
-
 	<main>
 		<slot />
 	</main>
 
 	<footer>
-		<p>visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to learn SvelteKit</p>
+		<p>
+			Written by <a href="https://kit.svelte.dev">Oswin</a> and <a href="https://kit.svelte.dev">Leon</a>
+		</p>
 	</footer>
 </div>
 

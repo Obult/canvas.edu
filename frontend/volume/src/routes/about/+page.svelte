@@ -3,24 +3,27 @@
 	<meta name="description" content="About this app" />
 </svelte:head>
 
+<!-- Script -->
+<script>
+import { dev } from '$app/environment';
+
+export const csr = dev;
+export const prerender = true;
+
+let jsonPostExample = {
+	"width": 42,
+	"height": 42,
+	"data": [255, 0, 0, 255],
+};
+</script>
+
+<!-- HTML -->
 <div class="text-column">
-	<h1>About this app</h1>
+	<h1>About this project</h1>
+	<p>This project is meant for education and its pixels are not updateable on the frontend on purpose.</p>
 
-	<p>
-		This is a <a href="https://kit.svelte.dev">SvelteKit</a> app. You can make your own by typing the
-		following into your command line and following the prompts:
-	</p>
-
-	<pre>npm create svelte@latest</pre>
-
-	<p>
-		The page you're looking at is purely static HTML, with no client-side interactivity needed.
-		Because of that, we don't need to load any JavaScript. Try viewing the page's source, or opening
-		the devtools network panel and reloading.
-	</p>
-
-	<p>
-		The <a href="/sverdle">Sverdle</a> page illustrates SvelteKit's data loading and form handling. Try
-		using it with JavaScript disabled!
-	</p>
+	<h1>JSON Post example</h1>
+	<span>Sending a post request with a JSON body:</span>
+	<pre><code>{JSON.stringify(jsonPostExample)}</code></pre>
+	<p>Will update the canvas for you and for everybody else.</p>
 </div>
