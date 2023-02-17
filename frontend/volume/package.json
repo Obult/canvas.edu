@@ -2,6 +2,7 @@
 	"name": "volume",
 	"version": "0.0.1",
 	"scripts": {
+		"start": "vite --host",
 		"dev": "vite dev",
 		"build": "vite build",
 		"preview": "vite preview",
