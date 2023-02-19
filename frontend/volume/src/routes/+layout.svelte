@@ -11,7 +11,7 @@
 
 	<footer>
 		<p>
-			Written by <a href="https://kit.svelte.dev">Oswin</a> and <a href="https://kit.svelte.dev">Leon</a>
+			Written by <a href="https://github.com/Obult">Oswin</a> and <a href="https://youtube.com/watch?v=dQw4w9WgXcQ">Leon</a>
 		</p>
 	</footer>
 </div>
