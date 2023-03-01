@@ -40,6 +40,7 @@ export class CanvasGateway implements OnGatewayInit, OnGatewayConnection, OnGate
     console.log(`Client disconnected: ${client.id}`);
   }
 
+  // api call resolver
   paintToCanvas(add: imageDataDto) {
     modifyRegion(this.canvas.data, (add.height * this.canvas.width + add.width) * 4, [Number(add.data[0]), Number(add.data[1]), Number(add.data[2]), Number(add.data[3])]);
     this.server.emit('canvas-update', add);

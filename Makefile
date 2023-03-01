@@ -41,3 +41,7 @@ seed:
 ms:	migrate seed
 
 # make sure to not have mac node modules and then build and run with the makefile
+
+studio:
+		export DATABASE_URL='postgres://dbuser:dbpassword@localhost:5432/canvasDB' && \
+		cd backend/volume/ && npx prisma studio
