@@ -8,7 +8,7 @@ export const prerender = true;
 let canvas: HTMLCanvasElement;
 
 onMount(() => {
-	const socket = io(`${config.backendUrl}/canvas`);
+	const socket = io('http://localhost:3000/canvas');
 	const ctx = canvas.getContext("2d")!; // TODO: Error handling
 	ctx.imageSmoothingEnabled = false;
 	ctx.scale(4, 4);
