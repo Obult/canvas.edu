@@ -7,7 +7,6 @@ import { User } from '@prisma/client'
 @Injectable()
 export class IdentityService {
   private userService: PrismaUserService;
-  private User = 'User';
   
   requestUser(request: Request): Promise<User> {
     const originalIP = request.headers['x-real-ip'];

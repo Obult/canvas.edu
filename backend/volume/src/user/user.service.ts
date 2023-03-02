@@ -60,7 +60,7 @@ export class PrismaUserService {
     });
   }
   
-  async updateOrCreateUser(ip: string, username:string) {
+  async updateOrCreateUser(ip: string, username: string) {
     return this.prisma.user.upsert({
       where: {
         ip: ip,
@@ -68,6 +68,19 @@ export class PrismaUserService {
       update: {
         name: username,
       },
+      create: {
+        ip: ip,
+        name: username,
+      },
+    })
+  }
+
+  async getOrCreateUser(ip: string, username: string) {
+    return this.prisma.user.upsert({
+      where: {
+        ip: ip,
+      },
+      update: {},
       create: {
         ip: ip,
         name: username,

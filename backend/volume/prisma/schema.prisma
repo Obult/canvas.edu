@@ -19,6 +19,7 @@ enum Team {
 model Pixel {
   id        Int       @default(autoincrement()) @id
   location  Int[]
+  color     Int[]
   stamp     DateTime  @default(now())
   artist    User?     @relation(fields: [artistId], references: [id])
   artistId  Int?
