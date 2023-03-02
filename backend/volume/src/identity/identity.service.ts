@@ -1,29 +1,28 @@
 import { Injectable } from '@nestjs/common';
 import { Request } from 'express';
-import { PrismaUserService } from 'src/user/user.service';
-import { User } from '@prisma/client'
-
+import { extractRealIp } from 'src/ip/ip.service';
 
 @Injectable()
 export class IdentityService {
-  private userService: PrismaUserService;
-  
-  requestUser(request: Request): Promise<User> {
-    const originalIP = request.headers['x-real-ip'];
-    return this.userService.getUserByIp(originalIP[0]);
-  }
+  // Ip as string and Date last edit stamp
+  private timeouts = new Map<string, Date>();
+  constructor() {}
 
-  async isNotTimedOut(request: Request | User, timeoutInMilliSec: number): Promise<boolean> {
+  async isNotTimedOut(request: Request, timeoutInMilliSec: number): Promise<boolean> {
     if (timeoutInMilliSec == 0) // optimization for zero timeout
       return true;
 
-    if (request instanceof Request) {
-      const req = request as Request;
-      const user = await this.requestUser(req);
-      return (user.stamp.getTime() + timeoutInMilliSec >= Date.now());
+    const ip = extractRealIp(request);
+    if (!this.timeouts.has(ip))  {
+      this.timeouts.set(ip, new Date());
+      return true;
     }
-    const user = request as User;
-    return (user.stamp.getTime() + timeoutInMilliSec >= Date.now());
+    const stamp = this.timeouts.get(ip);
+    console.log('usr time: ', stamp.getTime() + timeoutInMilliSec, 'now: ', Date.now());
+    const timeOutState = ((stamp.getTime() + timeoutInMilliSec) <= Date.now());
+    if (timeOutState)
+      this.timeouts.set(ip, new Date());
+    return timeOutState;
   }
 
 }

@@ -7,20 +7,15 @@ import {
   Param,
   HttpStatus,
   HttpException,
-  Query
+  Query,
 } from '@nestjs/common';
 import { CanvasGateway } from './canvas.gateway';
 import { imageDataDto } from './dto/imageDataDto';
 import { PrismaUserService } from 'src/user/user.service';
 import { Request } from 'express';
 import { PrismaPixelService } from 'src/pxl/pixel.service';
-import { IdentityService } from 'src/identity/identity.service';
-
-// extracting real Ip as forwarded in header by nginx config
-function extractRealIp(request: Request) : string {
-  const realIp = request.headers['x-real-ip'];
-  return typeof realIp === 'string' ? realIp : realIp[0];
-}
+import { IdentityService} from 'src/identity/identity.service';
+import { extractRealIp } from 'src/ip/ip.service';
 
 @Controller('canvas')
 export class CanvasController {
@@ -69,7 +64,8 @@ export class CanvasController {
 
     // check cooldown here? && getorcreateuser before?
 
-    if (await this.identityService.isNotTimedOut(request, 1000))
+    if (await this.identityService.isNotTimedOut(request, 1000) == false)
+      return 'timeout, do not send multiple pixels without delay';
 
     this.addPxlToDatabase(request, pxlData);
     return this.canvasGate.paintToCanvas(pxlData);

@@ -9,5 +9,6 @@ import { CanvasGateway } from './canvas.gateway';
   imports: [IdentityModule, UserModule, PixelModule],
   controllers: [CanvasController],
   providers: [CanvasGateway],
+  exports: [],
 })
 export class CanvasModule {}
