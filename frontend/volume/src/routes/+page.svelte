@@ -8,11 +8,11 @@ export const prerender = true;
 let canvas: HTMLCanvasElement;
 
 onMount(() => {
-	const socket = io('http://pixels.codam.nl:3000/canvas');
+	const socket = io('http://localhost:3000/canvas');
 	const ctx = canvas.getContext("2d")!; // TODO: Error handling
 	ctx.imageSmoothingEnabled = false;
 	ctx.scale(4, 4);
-	
+
 	/**
 	 * Increase the size of the array to 64.
 	 * @param inputArray The array to increase.
