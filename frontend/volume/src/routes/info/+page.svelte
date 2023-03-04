@@ -17,16 +17,22 @@
 	const code = `import requests
 import json
 
+# Define the URL of the API endpoint and the request headers
 url = "http://api.pixels.codam.nl/canvas/single"
 headers = {'Content-Type': 'application/json'}
 
+# Define the pixel data as a Python dictionary
 pixel = {'width': 42, 'height': 42, 'data': [0, 25, 255, 255]}
 
+# Send a POST request to the API endpoint with the pixel data as JSON
 response = requests.post(url, headers=headers, data=json.dumps(pixel))
-# test
+
+# Check if the request was successful
 if response.ok:
+    # If the request was successful, print a success message
     print("Pixel successfully changed!")
 else:
+    # If the request was unsuccessful, print an error message that includes the HTTP status code
     print("Failed to change pixel:", response.status_code)
 `;
 
