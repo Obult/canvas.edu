@@ -17,5 +17,15 @@
 	"code.python.title": "Python example",
 	"copy": "Copy",
 	"copy.success": "Copied!",
-	"footer": "Made with ❤️ by"
+	"footer": "Made with ❤️ by",
+		"code": {
+			"python": {
+				"comment1": "Define the URL of the API endpoint and the request headers",
+				"comment2": "Define the pixel data as a Python dictionary",
+				"comment3": "Send a POST request to the API endpoint with the pixel data as JSON",
+				"comment4": "Check if the request was successful",
+				"comment5": "If the request was successful, print a success message",
+				"comment6": "If the request was unsuccessful, print an error message that includes the HTTP status code"
+			}
+		}
 }

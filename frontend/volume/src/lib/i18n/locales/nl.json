@@ -17,5 +17,15 @@
 	"code.python.title": "Python voorbeeld",
 	"copy": "Kopieer",
 	"copy.success": "Gekopieerd!",
-	"footer": "Gemaakt met ❤️ door"
+	"footer": "Gemaakt met ❤️ door",
+	"code": {
+		"python": {
+			"comment1": "Definieer de URL van het API-eindpunt en de aanvraagheaders",
+			"comment2": "Definieer de pixelgegevens als een Python-dictionary",
+			"comment3": "Verstuur een POST-aanvraag naar het API-eindpunt met de pixelgegevens als JSON",
+			"comment4": "Controleer of de aanvraag succesvol was",
+			"comment5": "Als de aanvraag succesvol was, print dan een succesbericht",
+			"comment6": "Als de aanvraag niet succesvol was, print dan een foutbericht dat de HTTP-statuscode bevat"
+		}
+	}
 }

@@ -3,10 +3,11 @@
   import Header from "$lib/components/Header.svelte";
   import { browser } from '$app/environment'
   import '$lib/i18n'
-  import { isLoading, _ } from 'svelte-i18n';
+  import { _, isLoading } from 'svelte-i18n';
+	import Loader from "$lib/components/Loader.svelte";
 </script>
 {#if $isLoading}
-  Please wait...
+  <Loader />
 {:else}
 <div class="app">
   <Header />
