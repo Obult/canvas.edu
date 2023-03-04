@@ -33,3 +33,8 @@ pXquery = f'?x={x}&y={y}'
 response = requests.get(url + 'canvas/coordinates' + pXquery, headers=headers)
 print(response, response.content)
 # 200, apropriate status code
+
+# get myPixels
+
+# get allPixels
+
