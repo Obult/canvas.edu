@@ -77,7 +77,7 @@ else:
 			<Button code={jsonExample} />
 
 		</div>
-		<Highlight class="bg-[#282c34] !mt-0" language={json} code={jsonExample} />
+		<Highlight class="bg-[#282c34] !m-0" language={json} code={jsonExample} />
 	</div>
 	<h2 class="text-xl font-semibold">{$_('info.header5')}</h2>
 	<p>
@@ -90,7 +90,7 @@ else:
 			<span class="font-semibold ml-2.5">{$_('code.python.title')}</span>
 			<Button {code} />
 		</div>
-		<Highlight class="bg-[#282c34] !mt-0" language={python} {code} />
+		<Highlight class="bg-[#282c34] !m-0" language={python} {code} />
 	</div>
 	<h2 class="text-xl font-semibold">{$_('info.header3')}</h2>
 	<p>
