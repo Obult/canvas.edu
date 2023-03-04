@@ -1,14 +1,14 @@
 <script lang="ts">
- import { onMount } from "svelte";
+import { onMount } from "svelte";
 import io from 'socket.io-client';
-
+import { config } from '../lib/config';
 
 export const prerender = true;
 
 let canvas: HTMLCanvasElement;
 
 onMount(() => {
-	const socket = io('http://pixels.codam.nl:3000/canvas');
+	const socket = io('http://localhost:3000/canvas');
 	const ctx = canvas.getContext("2d")!; // TODO: Error handling
 	ctx.imageSmoothingEnabled = false;
 	ctx.scale(4, 4);

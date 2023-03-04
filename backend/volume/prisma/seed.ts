@@ -4,39 +4,39 @@ const prisma = new PrismaClient();
 
 async function main() {
 
-  const alice = await prisma.user.upsert({
+  // const alice = await prisma.user.upsert({
 
-    where: { id: 0 },
+  //   where: { id: 0 },
 
-    update: {},
+  //   update: {},
 
-    create: {
+  //   create: {
 
-      id: 0,
+  //     id: 0,
 
-      name: 'Alice',
+  //     name: 'Alice',
 
-    },
+  //   },
 
-  });
+  // });
 
-  const bob = await prisma.user.upsert({
+  // const bob = await prisma.user.upsert({
 
-    where: { id: 1 },
+  //   where: { id: 1 },
 
-    update: {},
+  //   update: {},
 
-    create: {
+  //   create: {
 
-      id:  1,
+  //     id:  1,
 
-      name: 'Bob',
+  //     name: 'Bob',
 
-    },
+  //   },
 
-  });
+  // });
 
-  console.log({ alice, bob });
+  // console.log({ alice, bob });
 
 }
 

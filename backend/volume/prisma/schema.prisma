@@ -17,16 +17,19 @@ enum Team {
 }
 
 model Pixel {
-  id        Int     @default(autoincrement()) @id
+  id        Int       @default(autoincrement()) @id
   location  Int[]
+  color     Int[]
   stamp     DateTime  @default(now())
   artist    User?     @relation(fields: [artistId], references: [id])
   artistId  Int?
 }
 
 model User {
-  id        Int     @default(autoincrement()) @id
-  name      String  @unique // prompt on startup
+  id        Int       @default(autoincrement()) @id
+  ip        String    @unique
+  name      String
   team      Team?    
-  pixels    Pixel[] @relation()
+  pixels    Pixel[]   @relation()
+  stamp     DateTime  @default(now()) // updates on new pixel placed event
 }
