@@ -25,7 +25,8 @@ class pxlInfo:
 x, y = 20, 80 # starting coordinates
 # for i in range(100):
 #     # create pxlInfo object with updated coordinates
-data = pxlInfo(x, y, [random.random() * 255, random.random() * 255, random.random() * 255, 255])
+# data = pxlInfo(x, y, [random.random() * 255, random.random() * 255, random.random() * 255, 255])
+data = pxlInfo(x, y, [0, 33, 255, 255])
 print(data)
 response = requests.post(url, headers=headers, data=json.dumps(data.__dict__))
 

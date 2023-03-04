@@ -16,6 +16,7 @@ import { Request } from 'express';
 import { PrismaPixelService } from 'src/pxl/pixel.service';
 import { IdentityService} from 'src/identity/identity.service';
 import { extractRealIp } from 'src/ip/ip.service';
+import { AdminService } from 'src/auth/admin.service';
 
 @Controller('canvas')
 export class CanvasController {
@@ -24,7 +25,8 @@ export class CanvasController {
     private readonly userService: PrismaUserService,
     private readonly pixelService: PrismaPixelService,
     private readonly identityService: IdentityService,
-    ) {}
+    private readonly adminService: AdminService,
+  ) {}
 
   async addPxlToDatabase(request: Request, data: imageDataDto) {
     const realIp = extractRealIp(request);
@@ -63,8 +65,8 @@ export class CanvasController {
     }
 
     // check cooldown here? && getorcreateuser before?
-
-    if (await this.identityService.isNotTimedOut(request, 1000) == false)
+    // console.log('can log');
+    if (await this.identityService.isNotTimedOut(request, this.adminService.getTimeOut()) == false)
       return 'timeout, do not send multiple pixels without delay';
 
     this.addPxlToDatabase(request, pxlData);
