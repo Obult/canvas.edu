@@ -15,8 +15,8 @@ print(response, response.content)
 # set timeout
 code = '4f385d17' #set code from backend here
 timeout = 42
-timeoutQuery = f'admin/timeout?time={timeout}&code=' + code
-response = requests.post(url + timeoutQuery, headers=headers)
+timeoutQuery = f'?time={timeout}&code=' + code
+response = requests.post(url + 'admin/timeout' + timeoutQuery, headers=headers)
 print(response, response.content)
 # 201 (creation of recourse), could return 200 instead with 204 (no content)
 
@@ -35,6 +35,13 @@ print(response, response.content)
 # 200, apropriate status code
 
 # get myPixels
+response = requests.get(url + 'canvas/myPixels', headers=headers)
+print(response, response.content)
+# returned nothing (weird)
 
 # get allPixels
+response = requests.get(url + 'canvas/everyPixel', headers=headers)
+print(response, response.content)
+# returned everything (succes)
 
+# backend is still alive
