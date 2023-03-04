@@ -96,7 +96,7 @@ export class CanvasController {
   }
 
   // get all pixels and return them to requester, only meant for total replay!!
-  @Get('everyPixel')
+  @Get('allPixels')
   async getAllPixels()  {
     return this.pixelService.Pixels({});
   }

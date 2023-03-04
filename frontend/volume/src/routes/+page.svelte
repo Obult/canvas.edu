@@ -12,7 +12,7 @@ onMount(() => {
 	const ctx = canvas.getContext("2d")!; // TODO: Error handling
 	ctx.imageSmoothingEnabled = false;
 	ctx.scale(4, 4);
-	
+
 	/**
 	 * Increase the size of the array to 64.
 	 * @param inputArray The array to increase.
