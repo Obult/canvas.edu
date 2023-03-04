@@ -16,5 +16,6 @@
 	"code.json.title": "JSON body example",
 	"code.python.title": "Python example",
 	"copy": "Copy",
-	"copy.success": "Copied!"
+	"copy.success": "Copied!",
+	"footer": "Made with ❤️ by"
 }

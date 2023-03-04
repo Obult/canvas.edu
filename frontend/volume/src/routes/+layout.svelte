@@ -3,7 +3,7 @@
   import Header from "$lib/components/Header.svelte";
   import { browser } from '$app/environment'
   import '$lib/i18n'
-  import { isLoading } from 'svelte-i18n';
+  import { isLoading, _ } from 'svelte-i18n';
 </script>
 {#if $isLoading}
   Please wait...
@@ -16,7 +16,7 @@
 
   <footer>
     <p>
-      Written by <a href="https://github.com/Obult">Oswin</a>,
+      {$_('footer')} <a href="https://github.com/Obult">Oswin</a>,
       <a href="https://github.com/W2Wizard">Leon</a> & <a href="https://github.com/LithiumOx">Mees</a>
     </p>
   </footer>
