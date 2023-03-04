@@ -1,7 +1,7 @@
 <script lang="ts">
- import { onMount } from "svelte";
+import { onMount } from "svelte";
 import io from 'socket.io-client';
-
+import { config } from '../lib/config';
 
 export const prerender = true;
 
