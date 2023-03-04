@@ -8,7 +8,7 @@
   class=" flex w-full items-center justify-between p-4"
 >
   <a
-    href="/"
+    href="https://codam.nl"
     class="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-black"
   >
     <!-- <span class="sr-only">Logo</span> -->
