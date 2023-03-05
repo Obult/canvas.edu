@@ -29,8 +29,8 @@ services:
     networks:
       - canvasnetwork
   db:
-    ports:
-      - "5432:5432" # only for prisma studio
+    # ports:
+    #   - "5432:5432" # only for prisma studio, remove for production safety
     image: postgres:15
     container_name: db
     volumes:

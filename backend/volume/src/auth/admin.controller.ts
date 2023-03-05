@@ -24,12 +24,12 @@ export class AdminController {
     console.log('timeout set to: ', timeout);
   }
 
-  // @Post('replay')
-  // startReplay(@Query('time') timeout: number, @Query('code') code: string) {
-  //   if (this.passService.checkCode(code) == false)
-  //     return ;
-  //   this.adminService.setTimeout(timeout);
-  //   console.log('timeout set to: ', timeout);
-  // }
+  // start repaly event of all changes in the database
+  @Post('replay')
+  startReplay(@Query('code') code: string) {
+    if (this.passService.checkCode(code) == false)
+      return ;
+    // 
+  }
 
  }

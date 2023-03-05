@@ -96,6 +96,7 @@ export class CanvasController {
       this.addPxlToDatabase(request, pxl);
       this.canvasGate.paintToCanvas(pxl);
     });
+    return 0;
   }
 
   @Post('nameUser/:name')
