@@ -3,8 +3,6 @@ import { onMount } from "svelte";
 import io from 'socket.io-client';
 import { config } from '../lib/config';
 
-export const prerender = true;
-
 let canvas: HTMLCanvasElement;
 
 onMount(() => {
@@ -25,15 +23,26 @@ onMount(() => {
 	}
 
 	// Someone else updated the pixel
-	socket.on('canvas-update', pixel => {
+	socket.on('update', pixel => {
         let tmpData = increaseArraySize(new Uint8ClampedArray(pixel.data));
         ctx.putImageData(new ImageData(tmpData, 4, 4), pixel.width * 4, pixel.height * 4);
 	});
 
-	// We just connected, and we get the canvas data
-	socket.on('canvas-init', canvas => {
+		socket.on('multiple-update', pixel => {
+        // let tmpData = increaseArraySize(new Uint8ClampedArray(pixel.data));
+        // ctx.putImageData(new ImageData(tmpData, 4, 4), pixel.width * 4, pixel.height * 4);
 
-		console.log(new Uint8ClampedArray(canvas.data));
+		// update the canvas with the new data consisting of a list of pixels
+		pixel.forEach((p: any) => {
+			let tmpData = increaseArraySize(new Uint8ClampedArray(p.data));
+			ctx.putImageData(new ImageData(tmpData, 4, 4), p.width * 4, p.height * 4);
+		});
+	});
+
+	// We just connected, and we get the canvas data
+	socket.on('init', canvas => {
+
+		// console.log(new Uint8ClampedArray(canvas.data));
 
 		const imageData = new ImageData(new Uint8ClampedArray(canvas.data), canvas.width, canvas.height);
 
@@ -52,12 +61,12 @@ onMount(() => {
 </script>
 
 <svelte:head>
-	<title>Home</title>
+	<title>Codam - Canvas Project</title>
 	<meta name="description" content="Svelte demo app" />
 </svelte:head>
 
 <section>
-	<canvas width="800" height="800" bind:this={canvas}></canvas>
+	<canvas class="hover:scale-[101%] transition-all duration-500" width="800" height="800" bind:this={canvas}></canvas>
 </section>
 
 <style>

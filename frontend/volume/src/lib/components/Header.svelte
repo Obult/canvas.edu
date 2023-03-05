@@ -24,7 +24,7 @@
 
     <li>
       <a
-        class="inline-flex items-center gap-2 rounded-lg px-3 py-2"
+        class="underline-offset-2 inline-flex items-center gap-2 rounded-lg px-3 py-2" class:underline={true}
         href="/info"
       >
 		{$_('header.info')}

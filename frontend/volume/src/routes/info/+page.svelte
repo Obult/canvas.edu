@@ -56,7 +56,7 @@ else:
 
 
 <!-- HTML -->
-<article class="text-column prose lg:prose-lg mx-auto">
+<article class="text-column prose lg:prose-lg mx-auto mb-5">
 	<div>
 		<h1 class="font-bold text-3xl">{$_('info.title')}</h1>
 		<blockquote class="text-sm font-light">
@@ -83,7 +83,7 @@ else:
 			<Button code={jsonExample} />
 
 		</div>
-		<Highlight class="bg-[#282c34] !m-0" language={json} code={jsonExample} />
+		<Highlight class="bg-[#282c34] !m-0 hover:scale-[101%] transition-all duration-1000" language={json} code={jsonExample} />
 	</div>
 	<h2 class="text-xl font-semibold">{$_('info.header5')}</h2>
 	<p>
@@ -96,7 +96,7 @@ else:
 			<span class="font-semibold ml-2.5">{$_('code.python.title')}</span>
 			<Button {code} />
 		</div>
-		<Highlight class="bg-[#282c34] !m-0" language={python} {code} />
+		<Highlight class="bg-[#282c34] !m-0 hover:scale-[101%] transition-all duration-1000" language={python} {code} />
 	</div>
 	<h2 class="text-xl font-semibold">{$_('info.header3')}</h2>
 	<p>
