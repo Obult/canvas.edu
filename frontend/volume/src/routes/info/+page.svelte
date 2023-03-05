@@ -17,22 +17,22 @@
 	const code = `import requests
 import json
 
-# ${$_('code.python.comment1')}
+# Define the URL of the API endpoint and the request headers
 url = "http://api.pixels.codam.nl/canvas/single"
 headers = {'Content-Type': 'application/json'}
 
-# ${$_('code.python.comment2')}
+# Define the pixel data as a Python dictionary
 pixel = {'x': 42, 'y': 42, 'data': [0, 25, 255, 255]}
 
-# ${$_('code.python.comment3')}
+# Send a POST request to the API endpoint with the pixel data as JSON
 response = requests.post(url, headers=headers, data=json.dumps(pixel))
 
-# ${$_('code.python.comment4')}
+# Check if the request was successful
 if response.ok:
-    # ${$_('code.python.comment5')}
+    # If the request was successful, print a success message
     print("Pixel successfully changed!")
 else:
-    # ${$_('code.python.comment6')}
+    # If the request was unsuccessful, print an error message that includes the HTTP status code
     print("Failed to change pixel:", response.status_code)
 `;
 
