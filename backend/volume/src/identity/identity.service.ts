@@ -10,7 +10,7 @@ export class IdentityService {
 
   }
 
-  timeOutLeft(request: Request, timeoutInMilliSec: number): number {
+  async timeOutLeft(request: Request, timeoutInMilliSec: number): Promise<number> {
     if (timeoutInMilliSec == 0) // optimization for zero timeout
       return 0;
 

@@ -65,7 +65,7 @@ export class CanvasController {
     }
 
     // 
-    const timeoutLeft = this.identityService.timeOutLeft(request, this.adminService.getTimeOut())
+    const timeoutLeft = await this.identityService.timeOutLeft(request, this.adminService.getTimeOut())
     if (timeoutLeft > 0)
     {
       throw new HttpException({
