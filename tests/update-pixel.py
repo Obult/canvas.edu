@@ -11,8 +11,8 @@ headers = {'Content-Type': 'application/json',
 
 class pxlInfo:
   def __init__(self, width, height, data):
-    self.width = width
-    self.height = height
+    self.x = width
+    self.y = height
     self.data = data
 
 # class name:
@@ -26,22 +26,22 @@ x, y = 20, 80 # starting coordinates
 # for i in range(100):
 #     # create pxlInfo object with updated coordinates
 # data = pxlInfo(x, y, [random.random() * 255, random.random() * 255, random.random() * 255, 255])
-data = pxlInfo(x, y, [0, 33, 255, 255])
-print(data)
-response = requests.post(url, headers=headers, data=json.dumps(data.__dict__))
+# data = pxlInfo(x, y, [0, 33, 255, 255])
+# print(data)
+# response = requests.post(url, headers=headers, data=json.dumps(data.__dict__))
 
-# time.sleep(0.03)
+# # time.sleep(0.03)
 
-x, y = 120, 80 # starting coordinates
-data = pxlInfo(x, y, [0, 0, 255, 255])
-response = requests.post(url, headers=headers, data=json.dumps(data.__dict__))
-#     x += 1 # move one unit to the right
-#     y -= 2 # move one unit up
+# x, y = 120, 80 # starting coordinates
+# data = pxlInfo(x, y, [0, 0, 255, 255])
+# response = requests.post(url, headers=headers, data=json.dumps(data.__dict__))
+# #     x += 1 # move one unit to the right
+# #     y -= 2 # move one unit up
 
 x, y = 20, 180 # starting coordinates
 for i in range(100):
     # create pxlInfo object with updated coordinates
-    data = pxlInfo(x, y, [255, 0, 0, 255])
+    data = pxlInfo(x, y, [0, 255, 0, 255])
     response = requests.post(url, headers=headers, data=json.dumps(data.__dict__))
     x += 1 # move one unit to the right
     y -= 2 # move one unit up

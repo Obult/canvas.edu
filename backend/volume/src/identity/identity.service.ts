@@ -10,7 +10,7 @@ export class IdentityService {
 
   }
 
-  timeOutLeft(request: Request, timeoutInMilliSec: number): number {
+  async timeOutLeft(request: Request, timeoutInMilliSec: number): Promise<number> {
     if (timeoutInMilliSec == 0) // optimization for zero timeout
       return 0;
 
@@ -22,9 +22,13 @@ export class IdentityService {
     const stamp = this.timeouts.get(ip);
     const timeDiff = Date.now() - stamp.getTime();
     const timeLeft = timeoutInMilliSec - timeDiff;
-    if (timeLeft > 0)
+    if (timeLeft <= 0){
       this.timeouts.set(ip, new Date());
-    return timeLeft >= 0 ? timeLeft : 0;
+      console.log(0);
+      return 0;
+    }
+    console.log(timeLeft);
+    return timeLeft;
   }
 
 }
