@@ -24,10 +24,8 @@ export class IdentityService {
     const timeLeft = timeoutInMilliSec - timeDiff;
     if (timeLeft <= 0){
       this.timeouts.set(ip, new Date());
-      console.log(0);
       return 0;
     }
-    console.log(timeLeft);
     return timeLeft;
   }
 

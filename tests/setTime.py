@@ -4,11 +4,10 @@ import requests
 import json
 import time
 
-code = "4f385d17"
-url = "http://api.pixels.codam.nl/canvas/single"
-urlb = "http://localhost:3000/canvas/nameUser/renameduser"
-urlc = "http://localhost:3000/canvas/single"
-urld = "http://localhost:3000/admin/timeout?time=0&code=" + code
+url = "http://api.pixels.codam.nl"
+code = "8c9693ba"
+timeout = 420
+urld = url + f"/admin/timeout?time={timeout}&code=" + code
 url = urld
 headers = {'Content-Type': 'application/json',
            'x-real-ip': 'my.amazing.fake.ip'}

@@ -79,6 +79,25 @@ export class CanvasController {
     return this.canvasGate.paintToCanvas(pxlData);
   }
 
+  @Post('multiple')
+  async multiToCanvas(@Body() pxlDataArr: imageDataDto[], @Req() request: Request) {
+    const timeoutLeft = await this.identityService.timeOutLeft(request, this.adminService.getTimeOut() * pxlDataArr.length)
+    if (timeoutLeft > 0)
+    {
+      throw new HttpException({
+        status: HttpStatus.TOO_MANY_REQUESTS,
+        error: timeoutLeft,
+      }, HttpStatus.TOO_MANY_REQUESTS, {});
+    }
+    pxlDataArr.forEach((pxl) => {
+      const tmpData = new Uint8ClampedArray(pxl.data);
+      if (tmpData.length != 4)
+        return ;
+      this.addPxlToDatabase(request, pxl);
+      this.canvasGate.paintToCanvas(pxl);
+    });
+  }
+
   @Post('nameUser/:name')
   async nameUser(@Param('name') username: string, @Req() request: Request) {
     const realIp = extractRealIp(request);
