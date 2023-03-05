@@ -9,8 +9,8 @@
 	import Button from '$lib/components/Button.svelte';
 
 	const jsonExample = `{
-	"width": 42,
-	"height": 42,
+	"x": 42,
+	"y": 42,
 	"data": [255, 0, 0, 255], // rgba
 }`;
 
@@ -22,7 +22,7 @@ url = "http://api.pixels.codam.nl/canvas/single"
 headers = {'Content-Type': 'application/json'}
 
 # ${$_('code.python.comment2')}
-pixel = {'width': 42, 'height': 42, 'data': [0, 25, 255, 255]}
+pixel = {'x': 42, 'y': 42, 'data': [0, 25, 255, 255]}
 
 # ${$_('code.python.comment3')}
 response = requests.post(url, headers=headers, data=json.dumps(pixel))
