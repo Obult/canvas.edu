@@ -10,26 +10,21 @@ export class IdentityService {
 
   }
 
-  async isNotTimedOut(request: Request, timeoutInMilliSec: number): Promise<boolean> {
+  timeOutLeft(request: Request, timeoutInMilliSec: number): number {
     if (timeoutInMilliSec == 0) // optimization for zero timeout
-      return true;
+      return 0;
 
     const ip = extractRealIp(request);
     if (!this.timeouts.has(ip))  {
       this.timeouts.set(ip, new Date());
-      return true;
+      return 0;
     }
     const stamp = this.timeouts.get(ip);
-    // console.log('usr time: ', stamp.getTime() + timeoutInMilliSec, 'now: ', Date.now());
     const timeDiff = Date.now() - stamp.getTime();
-    const timeOutState = timeDiff >= timeoutInMilliSec;
-    if (timeOutState)
+    const timeLeft = timeoutInMilliSec - timeDiff;
+    if (timeLeft > 0)
       this.timeouts.set(ip, new Date());
-    else  {
-      console.log('rejected, wait ', timeoutInMilliSec - timeDiff, ' milisec');
-      console.log('timeout in milli: ', timeoutInMilliSec);
-    }
-    return timeOutState;
+    return timeLeft >= 0 ? timeLeft : 0;
   }
 
 }

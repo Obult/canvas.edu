@@ -9,8 +9,8 @@
 	import Button from '$lib/components/Button.svelte';
 
 	const jsonExample = `{
-	"width": 42,
-	"height": 42,
+	"x": 42,
+	"y": 42,
 	"data": [255, 0, 0, 255], // rgba
 }`;
 
@@ -22,7 +22,7 @@ url = "http://api.pixels.codam.nl/canvas/single"
 headers = {'Content-Type': 'application/json'}
 
 # ${$_('code.python.comment2')}
-pixel = {'width': 42, 'height': 42, 'data': [0, 25, 255, 255]}
+pixel = {'x': 42, 'y': 42, 'data': [0, 25, 255, 255]}
 
 # ${$_('code.python.comment3')}
 response = requests.post(url, headers=headers, data=json.dumps(pixel))
@@ -48,7 +48,7 @@ else:
 </script>
 
 <svelte:head>
-	<title>About</title>
+	<title>Codam - Project description</title>
 	<meta name="description" content="About this app" />
 	{@html atomOneDark}
 </svelte:head>
@@ -56,7 +56,7 @@ else:
 
 
 <!-- HTML -->
-<article class="text-column prose lg:prose-lg mx-auto">
+<article class="text-column prose lg:prose-lg mx-auto mb-5">
 	<div>
 		<h1 class="font-bold text-3xl">{$_('info.title')}</h1>
 		<blockquote class="text-sm font-light">
@@ -83,7 +83,7 @@ else:
 			<Button code={jsonExample} />
 
 		</div>
-		<Highlight class="bg-[#282c34] !m-0" language={json} code={jsonExample} />
+		<Highlight class="bg-[#282c34] !m-0 hover:scale-[101%] transition-all duration-1000" language={json} code={jsonExample} />
 	</div>
 	<h2 class="text-xl font-semibold">{$_('info.header5')}</h2>
 	<p>
@@ -96,7 +96,7 @@ else:
 			<span class="font-semibold ml-2.5">{$_('code.python.title')}</span>
 			<Button {code} />
 		</div>
-		<Highlight class="bg-[#282c34] !m-0" language={python} {code} />
+		<Highlight class="bg-[#282c34] !m-0 hover:scale-[101%] transition-all duration-1000" language={python} {code} />
 	</div>
 	<h2 class="text-xl font-semibold">{$_('info.header3')}</h2>
 	<p>

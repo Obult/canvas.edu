@@ -3,8 +3,17 @@
   import Header from "$lib/components/Header.svelte";
   import { browser } from '$app/environment'
   import '$lib/i18n'
-  import { _, isLoading } from 'svelte-i18n';
-	import Loader from "$lib/components/Loader.svelte";
+  import { _, isLoading, locale } from 'svelte-i18n';
+import Loader from "$lib/components/Loader.svelte";
+	import { onMount } from "svelte";
+	onMount(() => {
+		if (localStorage.getItem("locale") !== null) {
+			// extract the locale from the localStorage by parsing the JSON string
+			const lang = JSON.parse(localStorage.getItem("locale") || "");
+			locale.set(lang.locale || "en")
+		}
+	});
+
 </script>
 {#if $isLoading}
   <Loader />

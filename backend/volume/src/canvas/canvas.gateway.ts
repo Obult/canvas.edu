@@ -33,7 +33,7 @@ export class CanvasGateway implements OnGatewayInit, OnGatewayConnection, OnGate
 
   handleConnection(client: Socket) {
     console.log(`Client connected: ${client.id}`);
-    client.emit('canvas-init', this.canvas)
+    client.emit('init', this.canvas)
   }
 
   handleDisconnect(client: Socket) {
@@ -42,8 +42,8 @@ export class CanvasGateway implements OnGatewayInit, OnGatewayConnection, OnGate
 
   // api call resolver
   paintToCanvas(add: imageDataDto) {
-    modifyRegion(this.canvas.data, (add.height * this.canvas.width + add.width) * 4, [Number(add.data[0]), Number(add.data[1]), Number(add.data[2]), Number(add.data[3])]);
-    this.server.emit('canvas-update', add);
+    modifyRegion(this.canvas.data, (add.y * this.canvas.width + add.x) * 4, [Number(add.data[0]), Number(add.data[1]), Number(add.data[2]), Number(add.data[3])]);
+    this.server.emit('update', add);
   }
 
   getPxlData(x: number, y: number) {
