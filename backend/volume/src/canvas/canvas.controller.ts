@@ -91,6 +91,7 @@ export class CanvasController {
       }, HttpStatus.TOO_MANY_REQUESTS, {});
     }
     const user = await this.userService.getOrCreateUser(extractRealIp(request), 'unknown');
+    
     pxlDataArr.forEach((pxl) => {
       const tmpData = new Uint8ClampedArray(pxl.data);
       if (tmpData.length != 4)
