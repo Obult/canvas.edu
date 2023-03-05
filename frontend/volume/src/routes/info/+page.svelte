@@ -48,7 +48,7 @@ else:
 </script>
 
 <svelte:head>
-	<title>About</title>
+	<title>Codam - Project description</title>
 	<meta name="description" content="About this app" />
 	{@html atomOneDark}
 </svelte:head>
