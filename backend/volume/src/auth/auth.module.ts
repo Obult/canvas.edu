@@ -8,7 +8,7 @@ import { PassService } from './password.service';
 // import only the modules which provide the controllers
 
 @Module({
-  imports: [CanvasModule],
+  imports: [],
   providers: [PassService, AdminService],
   controllers: [AdminController],
   exports: [AdminService, PassService],
