@@ -1,5 +1,5 @@
 export class imageDataDto {
-  width: number;
-  height: number;
+  x: number;
+  y: number;
   data: Uint8ClampedArray;
 }

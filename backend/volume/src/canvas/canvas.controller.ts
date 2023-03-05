@@ -35,7 +35,7 @@ export class CanvasController {
     const user = await this.userService.getOrCreateUser(realIp, 'unknown');
 
     this.pixelService.createPixel({
-      location: [data.width, data.height],
+      location: [data.x, data.y],
       artist: {connect: {
         ip: realIp,
       }},
@@ -55,7 +55,7 @@ export class CanvasController {
 
   @Post('single')
   async paintToCanvas(@Body() pxlData: imageDataDto, @Req() request: Request) {
-    var tmpData = new Uint8ClampedArray(pxlData.data);
+    const tmpData = new Uint8ClampedArray(pxlData.data);
     if (tmpData.length != 4)
     {
       throw new HttpException({
@@ -64,10 +64,15 @@ export class CanvasController {
       }, HttpStatus.BAD_REQUEST, {});
     }
 
-    // check cooldown here? && getorcreateuser before?
-    // console.log('can log');
-    if (await this.identityService.isNotTimedOut(request, this.adminService.getTimeOut()) == false)
-      return 'timeout, do not send multiple pixels without delay';
+    // 
+    const timeoutLeft = this.identityService.timeOutLeft(request, this.adminService.getTimeOut())
+    if (timeoutLeft > 0)
+    {
+      throw new HttpException({
+        status: HttpStatus.TOO_MANY_REQUESTS,
+        error: timeoutLeft,
+      }, HttpStatus.TOO_MANY_REQUESTS, {});
+    }
 
     this.addPxlToDatabase(request, pxlData);
     return this.canvasGate.paintToCanvas(pxlData);

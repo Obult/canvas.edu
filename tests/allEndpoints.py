@@ -40,7 +40,7 @@ print(response, response.content)
 # returned nothing (weird)
 
 # get allPixels
-response = requests.get(url + 'canvas/everyPixel', headers=headers)
+response = requests.get(url + 'canvas/allPixels', headers=headers)
 print(response, response.content)
 # returned everything (succes)
 
