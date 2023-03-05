@@ -32,7 +32,7 @@ export class CanvasController {
     const realIp = extractRealIp(request);
 
     // if user does not exists it will be created with 'unknown' as name
-    const user = await this.userService.getOrCreateUser(realIp, 'unknown');
+    // const user = await this.userService.getOrCreateUser(realIp, 'unknown');
 
     this.pixelService.createPixel({
       location: [data.x, data.y],
@@ -75,6 +75,7 @@ export class CanvasController {
     }
 
     // console.log('pixel got through');
+    const user = await this.userService.getOrCreateUser(extractRealIp(request), 'unknown');
     this.addPxlToDatabase(request, pxlData);
     return this.canvasGate.paintToCanvas(pxlData);
   }
@@ -89,6 +90,7 @@ export class CanvasController {
         error: timeoutLeft,
       }, HttpStatus.TOO_MANY_REQUESTS, {});
     }
+    const user = await this.userService.getOrCreateUser(extractRealIp(request), 'unknown');
     pxlDataArr.forEach((pxl) => {
       const tmpData = new Uint8ClampedArray(pxl.data);
       if (tmpData.length != 4)

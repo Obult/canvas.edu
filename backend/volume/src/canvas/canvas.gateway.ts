@@ -46,6 +46,12 @@ export class CanvasGateway implements OnGatewayInit, OnGatewayConnection, OnGate
     this.server.emit('update', add);
   }
 
+  // send replay of everything in the database to the screen in chunks
+  // without changing the picture in Ram
+  startReplay(allData: imageDataDto[]) {
+
+  }
+
   getPxlData(x: number, y: number) {
     const dataStartLocation = (y * this.canvas.width + x) * 4;
     return (new PxlDataDto(x, y, new RGBA(this.canvas.data.slice(dataStartLocation, dataStartLocation + 4))));

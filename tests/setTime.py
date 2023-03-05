@@ -5,8 +5,8 @@ import json
 import time
 
 url = "http://api.pixels.codam.nl"
-code = "8c9693ba"
-timeout = 420
+code = "e7f6ad4b"
+timeout = 0
 urld = url + f"/admin/timeout?time={timeout}&code=" + code
 url = urld
 headers = {'Content-Type': 'application/json',
