@@ -74,6 +74,14 @@ export class CanvasController {
       }, HttpStatus.TOO_MANY_REQUESTS, {});
     }
 
+    if (pxlData.x < 0 || pxlData.y < 0 || pxlData.x > 200 || pxlData.y > 200) // magic (bound checking should be based on canvas size)
+    {
+      throw new HttpException({
+        status: HttpStatus.BAD_REQUEST,
+        error: 'out of bound',
+      }, HttpStatus.BAD_REQUEST, {});
+    }
+
     // console.log('pixel got through');
     const user = await this.userService.getOrCreateUser(extractRealIp(request), 'unknown');
     this.addPxlToDatabase(request, pxlData);
