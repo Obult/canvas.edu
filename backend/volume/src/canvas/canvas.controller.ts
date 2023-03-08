@@ -79,7 +79,7 @@ export class CanvasController {
       }, HttpStatus.BAD_REQUEST, {});
     }
 
-    if (pxlData.x < 0 || pxlData.y < 0 || pxlData.x > 200 || pxlData.y > 200) // magic (bound checking should be based on canvas size)
+    if (pxlData.x < 0 || pxlData.y < 0 || pxlData.x > 199 || pxlData.y > 199) // magic (bound checking should be based on canvas size)
     {
       throw new HttpException({
         status: HttpStatus.BAD_REQUEST,
@@ -99,7 +99,7 @@ export class CanvasController {
     
     pxlDataArr.forEach((pxl) => {
       const tmpData = new Uint8ClampedArray(pxl.data);
-      if (tmpData.length != 4)
+      if (tmpData.length != 4 || pxl.x < 0 || pxl.y < 0 || pxl.x > 199 || pxl.y > 199)
         return ;
       this.addPxlToDatabase(request, pxl);
       this.canvasGate.paintToCanvas(pxl);
