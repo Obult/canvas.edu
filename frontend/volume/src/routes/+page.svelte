@@ -6,7 +6,7 @@ let canvas: HTMLCanvasElement;
 
 onMount(() => {
 	const socket = io('http://api.pixels.codam.nl/canvas', {
-		transports: ['websocket'],
+		// transports: ['websocket'],
 	});
 	const ctx = canvas.getContext("2d")!; // TODO: Error handling
 	ctx.imageSmoothingEnabled = false;
