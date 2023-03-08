@@ -5,11 +5,10 @@ FROM node:19-alpine
 WORKDIR /usr/src/app
 
 # Copy package.json and package-lock.json
-COPY volume/prisma/ ./prisma
 COPY volume/*.json ./
-
 RUN npm install
 
+COPY volume/prisma/ ./prisma
 RUN npx prisma generate
 
 # Make port 3000 available to the world outside the container

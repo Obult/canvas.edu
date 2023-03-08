@@ -3,11 +3,16 @@ import { Socket, Server } from 'socket.io';
 import { PrismaPixelService } from 'src/pxl/pixel.service';
 import { imageDataDto } from './dto/imageDataDto';
 import { PxlDataDto, RGBA } from './dto/pixelDataDto';
+import { Pixel } from '@prisma/client';
 
 function modifyRegion(data: Uint8ClampedArray, regionStart: number, newValues: [number, number, number, number]) {
   for (let i = 0; i < 4; i++) {
     data[regionStart + i] = newValues[i];
   }
+}
+
+function sleep(ms: number): Promise<void> {
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 @WebSocketGateway({
@@ -46,6 +51,18 @@ export class CanvasGateway implements OnGatewayInit, OnGatewayConnection, OnGate
       modifyRegion(this.canvas.data, (pixel.y * this.canvas.width + pixel.x) * 4, [Number(pixel.data[0]), Number(pixel.data[1]), Number(pixel.data[2]), Number(pixel.data[3])]);
       this.server.emit('update', pixel);
     });
+  }
+
+  async playBack(pixelData: Pixel[]) {
+    const pixels = pixelData.map(pixel => ({
+      x: pixel.location[0],
+      y: pixel.location[1],
+      data: pixel.color,
+    }))
+    for (let i = 0; i < pixels.length / 30; i++)  {
+      this.server.emit('multiple-update', pixels.splice(i * 30, i * 30 + 30));
+      sleep(400);
+    }
   }
 
   afterInit(server: Server) {
