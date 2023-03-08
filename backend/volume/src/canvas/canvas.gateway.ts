@@ -1,4 +1,4 @@
-import { WebSocketGateway, OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect } from '@nestjs/websockets';
+import { WebSocketGateway, OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect, WebSocketServer } from '@nestjs/websockets';
 import { Socket, Server } from 'socket.io';
 import { PrismaPixelService } from 'src/pxl/pixel.service';
 import { imageDataDto } from './dto/imageDataDto';
@@ -35,7 +35,8 @@ export class CanvasGateway implements OnGatewayInit, OnGatewayConnection, OnGate
     width: 200,
     data: new Uint8ClampedArray(200 * 200 * 4)
   };
-  private server: Server;
+  // private server: Server;
+  @WebSocketServer() server: Server;
 
   async loadCanvasFromDB()  {
     const allPixels = await this.pixelService.Pixels({
@@ -67,7 +68,7 @@ export class CanvasGateway implements OnGatewayInit, OnGatewayConnection, OnGate
   }
 
   afterInit(server: Server) {
-    this.server = server;
+    // this.server = server;
     this.loadCanvasFromDB();
   }
 

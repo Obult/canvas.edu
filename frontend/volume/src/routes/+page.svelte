@@ -5,9 +5,7 @@ import io from 'socket.io-client';
 let canvas: HTMLCanvasElement;
 
 onMount(() => {
-	const socket = io('http://api.pixels.codam.nl/canvas', {
-		// transports: ['websocket'],
-	});
+	const socket = io('http://api.pixels.codam.nl/canvas');
 	const ctx = canvas.getContext("2d")!; // TODO: Error handling
 	ctx.imageSmoothingEnabled = false;
 	ctx.scale(4, 4);
