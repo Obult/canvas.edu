@@ -1,5 +1,18 @@
 version: '3.7'
 services:
+  db:
+    # ports:
+    #   - "5432:5432" # only for prisma studio, remove for production safety
+    image: postgres:15
+    container_name: db
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: dbuser
+      POSTGRES_PASSWORD: dbpassword
+      POSTGRES_DB: canvasDB
+    networks:
+      - canvasnetwork
   frontend:
     build:
       context: ./frontend
@@ -26,19 +39,6 @@ services:
       - db
     environment:
       DATABASE_URL: postgres://dbuser:dbpassword@db:5432/canvasDB
-    networks:
-      - canvasnetwork
-  db:
-    # ports:
-    #   - "5432:5432" # only for prisma studio, remove for production safety
-    image: postgres:15
-    container_name: db
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-    environment:
-      POSTGRES_USER: dbuser
-      POSTGRES_PASSWORD: dbpassword
-      POSTGRES_DB: canvasDB
     networks:
       - canvasnetwork
 

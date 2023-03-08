@@ -59,4 +59,20 @@ export class PrismaPixelService {
       where,
     });
   }
-}
+
+  // async getCanvas(): Promise<Pixel[]> {
+  //   return this.prisma.pixel.groupBy({
+  //     by: ['location', 'stamp'],
+  //     select: {
+  //       id: true,
+  //       color: true,
+  //       location: true,
+  //       stamp: true,
+  //       artistId: true,
+  //     },
+  //     orderBy: {
+  //       stamp: "desc",
+  //     },
+  //     }
+  //   })
+  }

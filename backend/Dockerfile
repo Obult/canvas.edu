@@ -5,13 +5,12 @@ FROM node:19-alpine
 WORKDIR /usr/src/app
 
 # Copy package.json and package-lock.json
-COPY volume/ .
+COPY volume/prisma/ ./prisma
+COPY volume/*.json ./
 
 RUN npm install
 
-RUN npm install prisma --save-dev && \
-    npx prisma && \
-    npx prisma generate
+RUN npx prisma generate
 
 # Make port 3000 available to the world outside the container
 EXPOSE 3000
@@ -20,4 +19,4 @@ EXPOSE 3000
 ENV DATABASE_URL postgres://dbuser:dbpassword@db:5432/dbname
 
 # Start the application
-CMD ["npm", "run", "start"]
+CMD ["npm", "run", "migrate-start"]

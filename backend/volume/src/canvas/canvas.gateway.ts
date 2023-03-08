@@ -1,5 +1,6 @@
 import { WebSocketGateway, OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect } from '@nestjs/websockets';
 import { Socket, Server } from 'socket.io';
+import { PrismaPixelService } from 'src/pxl/pixel.service';
 import { imageDataDto } from './dto/imageDataDto';
 import { PxlDataDto, RGBA } from './dto/pixelDataDto';
 
@@ -16,6 +17,9 @@ function modifyRegion(data: Uint8ClampedArray, regionStart: number, newValues: [
   namespace: '/canvas'
 })
 export class CanvasGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
+  constructor(
+    private readonly pixelService: PrismaPixelService,
+  ) {}
   private canvas: {
     height: number;
     width: number;
@@ -27,8 +31,26 @@ export class CanvasGateway implements OnGatewayInit, OnGatewayConnection, OnGate
   };
   private server: Server;
 
+  async loadCanvasFromDB()  {
+    const allPixels = await this.pixelService.Pixels({
+        orderBy: {
+        stamp: "desc",
+      },
+    });
+    allPixels.forEach(pxl => {
+      const pixel = {
+        x: pxl.location[0],
+        y: pxl.location[1],
+        data: pxl.color,
+      };
+      modifyRegion(this.canvas.data, (pixel.y * this.canvas.width + pixel.x) * 4, [Number(pixel.data[0]), Number(pixel.data[1]), Number(pixel.data[2]), Number(pixel.data[3])]);
+      this.server.emit('update', pixel);
+    });
+  }
+
   afterInit(server: Server) {
     this.server = server;
+    this.loadCanvasFromDB();
   }
 
   handleConnection(client: Socket) {
