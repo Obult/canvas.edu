@@ -42,7 +42,7 @@ response = requests.get(url + 'canvas/myPixels', headers=headers)
 
 # get allPixels
 response = requests.get(url + 'canvas/allPixels', headers=headers)
-print(response, response.content)
+# print(response, response.content)
 # returned everything (succes)
 
 # backend is still alive

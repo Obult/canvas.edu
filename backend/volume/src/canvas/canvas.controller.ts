@@ -53,8 +53,23 @@ export class CanvasController {
     })
   }
 
+  async timeoutCheck(request: Request, multiplier?: number)  {
+    if (typeof multiplier === 'undefined')
+      multiplier = 1;
+    const timeoutLeft = await this.identityService.timeOutLeft(request, multiplier * this.adminService.getTimeOut())
+    if (timeoutLeft > 0)
+    {
+      throw new HttpException({
+        status: HttpStatus.TOO_MANY_REQUESTS,
+        error: timeoutLeft,
+      }, HttpStatus.TOO_MANY_REQUESTS, {});
+    }
+  }
+
   @Post('single')
   async paintToCanvas(@Body() pxlData: imageDataDto, @Req() request: Request) {
+    await this.timeoutCheck(request);
+
     const tmpData = new Uint8ClampedArray(pxlData.data);
     if (tmpData.length != 4)
     {
@@ -62,16 +77,6 @@ export class CanvasController {
         status: HttpStatus.BAD_REQUEST,
         error: 'colordata is incorrect',
       }, HttpStatus.BAD_REQUEST, {});
-    }
-
-    // 
-    const timeoutLeft = await this.identityService.timeOutLeft(request, this.adminService.getTimeOut())
-    if (timeoutLeft > 0)
-    {
-      throw new HttpException({
-        status: HttpStatus.TOO_MANY_REQUESTS,
-        error: timeoutLeft,
-      }, HttpStatus.TOO_MANY_REQUESTS, {});
     }
 
     if (pxlData.x < 0 || pxlData.y < 0 || pxlData.x > 200 || pxlData.y > 200) // magic (bound checking should be based on canvas size)
@@ -82,7 +87,6 @@ export class CanvasController {
       }, HttpStatus.BAD_REQUEST, {});
     }
 
-    // console.log('pixel got through');
     const user = await this.userService.getOrCreateUser(extractRealIp(request), 'unknown');
     this.addPxlToDatabase(request, pxlData);
     return this.canvasGate.paintToCanvas(pxlData);
@@ -90,14 +94,7 @@ export class CanvasController {
 
   @Post('multiple')
   async multiToCanvas(@Body() pxlDataArr: imageDataDto[], @Req() request: Request) {
-    const timeoutLeft = await this.identityService.timeOutLeft(request, this.adminService.getTimeOut() * pxlDataArr.length)
-    if (timeoutLeft > 0)
-    {
-      throw new HttpException({
-        status: HttpStatus.TOO_MANY_REQUESTS,
-        error: timeoutLeft,
-      }, HttpStatus.TOO_MANY_REQUESTS, {});
-    }
+    await this.timeoutCheck(request, pxlDataArr.length);
     const user = await this.userService.getOrCreateUser(extractRealIp(request), 'unknown');
     
     pxlDataArr.forEach((pxl) => {
@@ -112,17 +109,20 @@ export class CanvasController {
 
   @Post('nameUser/:name')
   async nameUser(@Param('name') username: string, @Req() request: Request) {
+    await this.timeoutCheck(request);
     const realIp = extractRealIp(request);
     return await this.userService.updateOrCreateUser(realIp, username);
   }
 
   @Get('coordinates')
-  async findPxlData(@Query('x') x: number, @Query('y') y: number) {
-    return this.canvasGate.getPxlData(x, y);
+  async findPxlData(@Query('x') x: number, @Query('y') y: number, @Req() request: Request) {
+    await this.timeoutCheck(request);
+    return this.pixelService.findCurrentPxl(x, y);
   }
 
   @Get('myPixels')
   async getMyPixels(@Req() request: Request)  {
+    await this.timeoutCheck(request)
     const realIp = extractRealIp(request);
     const user = await this.userService.getOrCreateUser(realIp, 'unknown');
     return this.pixelService.Pixels({
@@ -134,7 +134,8 @@ export class CanvasController {
 
   // get all pixels and return them to requester, only meant for total replay!!
   @Get('allPixels')
-  async getAllPixels()  {
+  async getAllPixels(@Req() request: Request)  {
+    await this.timeoutCheck(request, 5);  // magic add to config later to prevent spam
     return this.pixelService.Pixels({});
   }
 }

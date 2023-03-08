@@ -60,6 +60,20 @@ export class PrismaPixelService {
     });
   }
 
+
+  async findCurrentPxl(x: number, y: number) : Promise<Pixel>{
+    return await this.prisma.pixel.findFirst({
+      where: {
+        location: {
+          equals: [x, y]
+        }
+      },
+      orderBy: {
+        stamp: 'desc',
+      },
+    });
+  }
+
   // async getCanvas(): Promise<Pixel[]> {
   //   return this.prisma.pixel.groupBy({
   //     by: ['location', 'stamp'],
