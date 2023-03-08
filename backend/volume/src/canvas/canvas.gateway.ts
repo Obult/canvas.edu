@@ -16,6 +16,7 @@ function sleep(ms: number): Promise<void> {
 }
 
 @WebSocketGateway({
+  transports: ['websocket'],
   cors: {
     origin: '*',
   },
