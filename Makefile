@@ -3,8 +3,9 @@ build:
 
 start:
 		docker-compose up -d
-
-run:	start
+run:			start
+rs: 			stop start
+re:	 			build rs	#first build for reduced downtime, then restart
 
 stop:
 		docker-compose down
@@ -12,36 +13,25 @@ stop:
 clean:
 		docker-compose down --remove-orphans
 
+# danger, removes database volume!
 fclean:
 		docker-compose down --volumes --remove-orphans
-
-re:	 			stop build run
 fre: 			fclean build run
-br:				build run
-restart: 	stop start
 
+# view container status
 ps:
 		docker-compose ps
 
-lint: 
-		@bash .github/scripts/eslint.sh
-
-lint-fix:
+# lint and fix
+lfix:
 		@bash .github/scripts/eslint.sh --fix
 
-migrate:
-		docker exec -it backend npx prisma migrate dev \
-			|| echo "\033[1;31mCould it be the container is not running?"
-
+# seed db with base values, empty for this project
 seed:
 		docker exec -it backend npx prisma db seed \
 			|| echo "\033[1;31mCould it be the container is not running?"
 
-# Do not forget to seed before using database: easy use make ms while containers are running
-ms:	migrate seed
-
-# make sure to not have mac node modules and then build and run with the makefile
-
+# in local mode can be used to view database
 studio:
 		export DATABASE_URL='postgres://dbuser:dbpassword@localhost:5432/canvasDB' && \
 		cd backend/volume/ && npx prisma studio
