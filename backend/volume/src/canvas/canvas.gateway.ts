@@ -34,7 +34,7 @@ export class CanvasGateway implements OnGatewayInit, OnGatewayConnection, OnGate
   async loadCanvasFromDB()  {
     const allPixels = await this.pixelService.Pixels({
         orderBy: {
-        stamp: "desc",
+        stamp: "asc",
       },
     });
     allPixels.forEach(pxl => {
