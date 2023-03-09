@@ -58,7 +58,7 @@ onMount(() => {
 </svelte:head>
 
 <section>
-	<canvas class="hover:scale-[101%] transition-all duration-500" width="800" height="800" bind:this={canvas}></canvas>
+	<canvas width="800" height="800" bind:this={canvas}></canvas>
 </section>
 
 <style>
